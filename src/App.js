@@ -1,10 +1,5 @@
 import React, { useEffect, useRef } from "react";
-
-// Default export: a full-screen scene with animated stars, glitch title,
-// scanlines, noise bursts, shooting stars, and a drifting sun image.
-// Drop this into a React app and ensure the image exists at /images/sun.png
-// (or change the src below). Tailwind is optional here; custom CSS covers
-// the visual effects.
+import sunImg from "./assets/sun.png";
 
 export default function GalacticCarnivalSunDrift() {
   const canvasRef = useRef(null);
@@ -46,7 +41,6 @@ export default function GalacticCarnivalSunDrift() {
       t += 1 / 60;
       ctx.clearRect(0, 0, w, h);
 
-      // Nebula backdrop
       const neb = ctx.createRadialGradient(
         w * 0.2,
         h * 0.25,
@@ -60,7 +54,6 @@ export default function GalacticCarnivalSunDrift() {
       ctx.fillStyle = neb;
       ctx.fillRect(0, 0, w, h);
 
-      // Stars
       for (const s of stars) {
         const drift = s.vx / (s.z * 0.7 + 0.3);
         s.x -= drift;
@@ -87,7 +80,6 @@ export default function GalacticCarnivalSunDrift() {
     resize();
     rafId = requestAnimationFrame(frame);
 
-    // Glitch + noise zaps
     const titleEl = titleRef.current;
     const noiseEl = noiseRef.current;
 
@@ -125,22 +117,18 @@ export default function GalacticCarnivalSunDrift() {
 
   return (
     <div className="gc-root">
-      {/* Stage & animated stars */}
       <div className="stage" aria-hidden>
         <canvas id="stars" ref={canvasRef} />
       </div>
 
-      {/* Noise & scanlines overlays */}
       <div className="noise" id="noise" ref={noiseRef} />
       <div className="scan" aria-hidden="true" />
 
-      {/* HUD chips */}
       <div className="hud">
         <div className="chip">Galactic Carnival</div>
         <div className="chip">FX: ON</div>
       </div>
 
-      {/* Title */}
       <div className="title">
         <div>
           <h1 className="glitch" data-text="GALACTIC CARNIVAL" ref={titleRef}>
@@ -150,15 +138,12 @@ export default function GalacticCarnivalSunDrift() {
         </div>
       </div>
 
-      {/* Shooting stars */}
       <div className="shoot" />
       <div className="shoot" />
       <div className="shoot" />
 
-      {/* Drifting sun image */}
-      <img src="/images/sun.png" id="sun" alt="Sun" />
+      <img src={sunImg} id="sun" alt="Sun" />
 
-      {/* Styles (scoped globally for simplicity) */}
       <style>{`
         :root{
           --bg1:#020015; --bg2:#0b0030; --neon:#76fffb; --mag:#ff2bd6;
